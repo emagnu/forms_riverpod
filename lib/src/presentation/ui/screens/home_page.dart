@@ -2,6 +2,7 @@
 //  Import LIBRARIES
 import 'package:flutter/material.dart';
 //  Import FILES
+import '../../../domain/todo.dart';
 import '../../widgets/todo_list.dart';
 //  //   ///
 
@@ -14,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _formGlobalKey = GlobalKey<FormState>();
+  Priority _selectedPriority = Priority.low;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,21 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   // priority
-
+                  DropdownButtonFormField(
+                    value: _selectedPriority,
+                    decoration:
+                        const InputDecoration(label: Text('Priority of Todo')),
+                    items: Priority.values
+                        .map((e) =>
+                            DropdownMenuItem(value: e, child: Text(e.title)))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        debugPrint('$value');
+                        _selectedPriority = value!;
+                      });
+                    },
+                  ),
                   // submit button
                   const SizedBox(height: 20),
                   FilledButton(
